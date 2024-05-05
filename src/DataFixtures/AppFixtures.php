@@ -4,16 +4,26 @@ namespace App\DataFixtures;
 
 use App\Entity\AnalyseAnswers;
 use App\Entity\AnalyseQuestions;
+use App\Entity\Hero;
 use App\Entity\Level;
 use App\Entity\NegotiationAnswers;
 use App\Entity\NegotiationQuestions;
 use App\Entity\PositionAnswers;
 use App\Entity\PositionQuestions;
+use App\Entity\Team;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
+use Faker\Generator;
 
 class AppFixtures extends Fixture
 {
+    private Generator $faker;
+
+    public function __construct()
+    {
+        $this->faker = Factory::create('fr_FR');
+    }
     public function load(ObjectManager $manager)
     {
         $data = [
@@ -138,19 +148,19 @@ class AppFixtures extends Fixture
                 ]
             ]
         ];
-        
+
         foreach ($data as $item) {
             $question = new PositionQuestions();
             $question->setQuestion($item['question']);
             $manager->persist($question);
-        
+
             $answers = $item['answers'];
             $positionAnswer = new PositionAnswers();
             $positionAnswer->setFirstAnswer($answers[0])
                 ->setSecondAnswer($answers[1])
                 ->setThirdAnswer($answers[2])
                 ->setIdquestion($question);
-        
+
             $manager->persist($positionAnswer);
         }
 
@@ -276,22 +286,22 @@ class AppFixtures extends Fixture
                 ]
             ]
         ];
-        
+
         foreach ($data as $item) {
             $question = new AnalyseQuestions();
             $question->setQuestion($item['question']);
             $manager->persist($question);
-        
+
             $answers = $item['answers'];
             $positionAnswer = new AnalyseAnswers();
             $positionAnswer->setFirstAnswer($answers[0])
                 ->setSecondAnswer($answers[1])
                 ->setThirdAnswer($answers[2])
                 ->setIdquestion($question);
-        
+
             $manager->persist($positionAnswer);
         }
-        
+
         $data = [
             [
                 "question" => "Un groupe de criminels détient des otages dans une banque. Comment abordez-vous la situation ?",
@@ -414,26 +424,27 @@ class AppFixtures extends Fixture
                 ]
             ]
         ];
-        
+
         foreach ($data as $item) {
             $question = new NegotiationQuestions();
             $question->setQuestion($item['question']);
             $manager->persist($question);
-        
+
             $answers = $item['answers'];
             $positionAnswer = new NegotiationAnswers();
             $positionAnswer->setFirstAnswer($answers[0])
                 ->setSecondAnswer($answers[1])
                 ->setThirdAnswer($answers[2])
                 ->setIdquestion($question);
-        
+
             $manager->persist($positionAnswer);
         }
-        
+
+        #region
         $level = new Level();
         $level->setCategory('Attaque')
             ->setLevel('1')
-            ->setLeveltitle('Téchnique de frappe');
+            ->setLeveltitle('Technique de frappe');
 
         $manager->persist($level);
 
@@ -452,24 +463,24 @@ class AppFixtures extends Fixture
         $manager->persist($level);
 
         $level = new Level();
-        $level->setCategory('Défense')
+        $level->setCategory('Defense')
             ->setLevel('1')
-            ->setLeveltitle("Téchnique de blocage");
+            ->setLeveltitle("Technique de blocage");
 
         $manager->persist($level);
 
         $level = new Level();
-        $level->setCategory('Défense')
+        $level->setCategory('Defense')
             ->setLevel('2')
             ->setLeveltitle("Positionnement");
-        
+
         $manager->persist($level);
 
         $level = new Level();
-        $level->setCategory('Défense')
+        $level->setCategory('Defense')
             ->setLevel('3')
             ->setLeveltitle("Potection d'équipe");
-        
+
         $manager->persist($level);
 
         $level = new Level();
@@ -492,6 +503,239 @@ class AppFixtures extends Fixture
             ->setLeveltitle("Prise de décision");
 
         $manager->persist($level);
+        #endregion
+
+        $data = [
+            [
+                "heroName" => "Ultron",
+                "superpowerDescription" => "Ultron est un androïde doté d'une intelligence artificielle avancée et d'une force physique surhumaine. Il peut contrôler les machines et les robots, ainsi que générer des armes énergétiques.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Aegis",
+                "superpowerDescription" => "Aegis possède une peau indestructible qui le rend impénétrable aux attaques physiques et aux balles. Il peut également générer un bouclier énergétique pour protéger ses alliés.",
+                "powerCategory" => "Defense"
+            ],
+            [
+                "heroName" => "Oracle",
+                "superpowerDescription" => "Oracle a le pouvoir de prédire l'avenir avec une grande précision, ce qui lui permet de anticiper les événements et de prendre des décisions stratégiques. Elle peut également manipuler les informations et pirater les systèmes informatiques.",
+                "powerCategory" => "Support"
+            ],
+            [
+                "heroName" => "Phoenix",
+                "superpowerDescription" => "Phoenix peut manipuler et générer le feu à volonté. Elle peut voler et projeter des rafales de flammes, ainsi que résister aux températures extrêmes.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Titan",
+                "superpowerDescription" => "Titan possède une force surhumaine et une durabilité accrue. Il peut également modifier sa taille pour devenir géant, ce qui lui confère une plus grande puissance et une portée de combat étendue.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Sentinel",
+                "superpowerDescription" => "Sentinel peut générer des champs de force protecteurs pour repousser les attaques ennemies. Il peut également créer des barrières énergétiques pour bloquer les projectiles et protéger les civils.",
+                "powerCategory" => "Defense"
+            ],
+            [
+                "heroName" => "Vortex",
+                "superpowerDescription" => "Vortex a le pouvoir de manipuler les flux d'air et de créer des tornades et des tempêtes. Il peut voler et contrôler les déplacements des objets en lévitation.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Medicus",
+                "superpowerDescription" => "Medicus a le pouvoir de guérir les blessures et les maladies avec un simple toucher. Il peut également renforcer la résistance physique et mentale de ses alliés.",
+                "powerCategory" => "Support"
+            ],
+            [
+                "heroName" => "Specter",
+                "superpowerDescription" => "Specter peut se rendre invisible et traverser les objets solides. Il peut aussi manipuler les ombres pour créer des illusions et désorienter ses ennemis.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Guardian",
+                "superpowerDescription" => "Guardian est doté d'une armure indestructible qui lui confère une force surhumaine et une résistance aux attaques. Il peut également projeter des champs d'énergie pour repousser les ennemis.",
+                "powerCategory" => "Defense"
+            ],
+            [
+                "heroName" => "Eclipse",
+                "superpowerDescription" => "Eclipse peut manipuler les photons et créer des champs de camouflage optique pour se dissimuler. Il peut également générer des éclairs de lumière intense pour éblouir ses ennemis.",
+                "powerCategory" => "Support"
+            ],
+            [
+                "heroName" => "Nebula",
+                "superpowerDescription" => "Nebula peut créer et manipuler des champs de gravité pour léviter et déplacer des objets. Elle peut également générer des vagues d'énergie gravitationnelle pour repousser ou attirer ses adversaires.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Pulse",
+                "superpowerDescription" => "Pulse peut manipuler les ondes sonores pour créer des boucliers de force et des attaques soniques. Il peut également amplifier ou annuler les sons environnants pour influencer le comportement des gens.",
+                "powerCategory" => "Defense"
+            ],
+            [
+                "heroName" => "Chronos",
+                "superpowerDescription" => "Chronos a le pouvoir de manipuler le temps, lui permettant de ralentir, d'accélérer ou de figer le mouvement des objets et des personnes. Il peut également prévoir les événements à venir et les éviter.",
+                "powerCategory" => "Support"
+            ],
+            [
+                "heroName" => "Sphinx",
+                "superpowerDescription" => "Sphinx peut lire les pensées et les émotions des autres, ainsi que projeter des illusions mentales. Il peut également contrôler les esprits et influencer les décisions des gens.",
+                "powerCategory" => "Support"
+            ],
+            [
+                "heroName" => "Blaze",
+                "superpowerDescription" => "Blaze peut générer et contrôler le feu à volonté. Il peut projeter des boules de feu, créer des murs de flammes et même se déplacer à grande vitesse en enveloppant son corps de flammes.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Fortress",
+                "superpowerDescription" => "Fortress possède une force physique surhumaine et une constitution robuste qui le rendent pratiquement invulnérable aux attaques physiques. Il peut également projeter des ondes de choc pour repousser les ennemis.",
+                "powerCategory" => "Defense"
+            ],
+            [
+                "heroName" => "Serenity",
+                "superpowerDescription" => "Serenity peut générer un champ d'énergie apaisant qui calme les esprits agités et guérit les blessures émotionnelles. Elle peut également projeter des vagues d'énergie positive pour renforcer le moral de ses alliés.",
+                "powerCategory" => "Support"
+            ],
+            [
+                "heroName" => "Storm",
+                "superpowerDescription" => "Storm a le pouvoir de manipuler les éléments atmosphériques, y compris le vent, la pluie, la foudre et la neige. Elle peut créer des tempêtes dévastatrices et invoquer des éclairs pour frapper ses ennemis.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Sentinel",
+                "superpowerDescription" => "Sentinel possède une technologie avancée qui lui permet de voler et de tirer des projectiles énergétiques. Il peut également analyser les environnements et les situations pour prendre des décisions tactiques éclairées.",
+                "powerCategory" => "Support"
+            ],
+            [
+                "heroName" => "Mirage",
+                "superpowerDescription" => "Mirage peut créer des illusions visuelles et auditives pour désorienter ses ennemis et protéger ses alliés. Elle peut également se camoufler et se fondre dans son environnement pour éviter la détection.",
+                "powerCategory" => "Defense"
+            ],
+            [
+                "heroName" => "Chrono",
+                "superpowerDescription" => "Chrono a le pouvoir de manipuler le temps en ralentissant ou en accélérant les mouvements des objets et des personnes autour de lui. Il peut également prédire les événements futurs et agir en conséquence.",
+                "powerCategory" => "Support"
+            ],
+            [
+                "heroName" => "Titan",
+                "superpowerDescription" => "Titan possède une force et une endurance surhumaines qui lui permettent de soulever des objets lourds et de résister aux attaques physiques. Il peut également générer des ondes de choc pour repousser les ennemis.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Nova",
+                "superpowerDescription" => "Nova peut manipuler l'énergie cosmique pour créer des explosions d'énergie et des rayons destructeurs. Elle peut également voler à des vitesses supersoniques et résister aux températures extrêmes de l'espace.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Guardian",
+                "superpowerDescription" => "Guardian possède une armure haute technologie qui lui confère une force et une résistance surhumaines. Il peut également déployer des boucliers énergétiques pour protéger ses alliés des attaques.",
+                "powerCategory" => "Defense"
+            ],
+            [
+                "heroName" => "Spectre",
+                "superpowerDescription" => "Spectre peut devenir intangible et traverser les objets solides. Il peut également manipuler les ombres pour créer des attaques furtives et se déplacer rapidement sans être détecté.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Aurora",
+                "superpowerDescription" => "Aurora peut générer des champs d'énergie lumineuse pour éblouir ses ennemis et illuminer les zones sombres. Elle peut également créer des illusions visuelles pour distraire et désorienter ses adversaires.",
+                "powerCategory" => "Support"
+            ],
+            [
+                "heroName" => "Blizzard",
+                "superpowerDescription" => "Blizzard peut manipuler la glace et le froid pour créer des tempêtes de neige et des rafales de vent glacial. Il peut également geler les surfaces et les ennemis pour les immobiliser.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Eclipse",
+                "superpowerDescription" => "Eclipse a le pouvoir de manipuler les ombres et les ténèbres pour se dissimuler et piéger ses ennemis dans l'obscurité. Il peut également générer des vagues d'énergie sombre pour affaiblir ses adversaires.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Quasar",
+                "superpowerDescription" => "Quasar peut manipuler les forces gravitationnelles pour déplacer des objets et des personnes à volonté. Il peut également créer des champs de force pour bloquer les attaques et repousser les ennemis.",
+                "powerCategory" => "Defense"
+            ],
+            [
+                "heroName" => "Phoenix",
+                "superpowerDescription" => "Phoenix peut manipuler et générer le feu à volonté. Elle peut voler et projeter des rafales de flammes, ainsi que résister aux températures extrêmes.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Apex",
+                "superpowerDescription" => "Apex possède une force, une vitesse et une agilité surhumaines qui en font un combattant redoutable. Il peut également projeter des champs d'énergie pour repousser les attaques et renforcer ses coups.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Luminary",
+                "superpowerDescription" => "Luminary peut générer et manipuler la lumière à volonté. Il peut créer des faisceaux d'énergie lumineuse pour aveugler ses ennemis et projeter des rayons laser dévastateurs.",
+                "powerCategory" => "Attaque"
+            ],
+            [
+                "heroName" => "Paragon",
+                "superpowerDescription" => "Paragon possède une constitution physique parfaite qui lui confère une force, une endurance et une agilité surhumaines. Il peut également guérir rapidement de ses blessures et résister aux toxines et poisons.",
+                "powerCategory" => "Defense"
+            ],
+            [
+                "heroName" => "Cascade",
+                "superpowerDescription" => "Cascade peut manipuler l'eau à volonté, créant des jets d'eau puissants et des tourbillons dévastateurs. Elle peut également purifier et guérir les blessures avec de l'eau régénératrice.",
+                "powerCategory" => "Support"
+            ]
+        ];
+
+        $attackers = [];
+        $defensers = [];
+        $supporters = [];
+        foreach ($data as $item) {
+            $hero = new Hero();
+            $hero->setCategory($item['powerCategory'])
+                ->setEmail($this->faker->email)
+                ->setHeroname($item['heroName'])
+                ->setPowerdescription($item['superpowerDescription'])
+                ->setPassword(password_hash($item['heroName'], PASSWORD_DEFAULT));
+
+            if ($item['powerCategory'] == "Attaque") {
+                $attackers[] = $hero;
+            } elseif ($item['powerCategory'] == "Defense") {
+                $defensers[] = $hero;
+            } else {
+                $supporters[] = $hero;
+            }
+
+            $manager->persist($hero);
+        }
+
+        $availableHeroes = array_merge($attackers, $defensers, $supporters);
+
+        while (!empty($availableHeroes)) {
+            $team = new Team();
+            $team->setTeamname($this->faker->unique()->word());
+
+            $numMembers = min(mt_rand(1, 2), count($availableHeroes));
+
+            for ($i = 0; $i < $numMembers; $i++) {
+                if (empty($availableHeroes)) {
+                    break;
+                }
+
+                $randomHeroKey = array_rand($availableHeroes);
+                $randomHero = $availableHeroes[$randomHeroKey];
+
+                unset($availableHeroes[$randomHeroKey]);
+                $availableHeroes = array_values($availableHeroes);
+
+                if ($randomHero->getCategory() === "Attaque") {
+                    $team->setAttacker($randomHero);
+                } elseif ($randomHero->getCategory() === "Defense") {
+                    $team->setDefenser($randomHero);
+                } else {
+                    $team->setSupporter($randomHero);
+                }
+            }
+            $team->setRepresentationImage("");
+
+            $manager->persist($team);
+        }
 
         $manager->flush();
     }

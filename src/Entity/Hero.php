@@ -37,6 +37,9 @@ class Hero
     #[ORM\OneToMany(targetEntity: Formation::class, mappedBy: 'heroId')]
     private Collection $formations;
 
+    #[ORM\OneToOne(mappedBy: 'attacker', cascade: ['persist', 'remove'])]
+    private ?Team $team = null;
+
     public function __construct()
     {
         $this->formations = new ArrayCollection();
@@ -133,6 +136,28 @@ class Hero
                 $formation->setHeroId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTeam(): ?Team
+    {
+        return $this->team;
+    }
+
+    public function setTeam(?Team $team): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($team === null && $this->team !== null) {
+            $this->team->setAttacker(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($team !== null && $team->getAttacker() !== $this) {
+            $team->setAttacker($this);
+        }
+
+        $this->team = $team;
 
         return $this;
     }

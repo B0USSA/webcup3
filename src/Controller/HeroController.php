@@ -95,7 +95,7 @@ class HeroController extends AbstractController
 
 
     #region UPDATE POSERDESCRIPTION AND CATEGORY
-    #[OA\Put(
+    #[OA\Post(
         tags: ["Hero"],
         summary: "Update power description and category",
         requestBody: new OA\RequestBody(
@@ -118,7 +118,7 @@ class HeroController extends AbstractController
             )
         ),
     )]
-    #[Route('/api/heroes/{email}/update', name: 'hero.update', methods: ['PUT'])]
+    #[Route('/api/heroes/{email}/update', name: 'hero.update', methods: ['POST'])]
     public function Update(Request $request, EntityManagerInterface $em, SecurityController $securityController, HeroRepository $heroRepository, Hero $hero = null): JsonResponse
     {
         if(!$hero)
